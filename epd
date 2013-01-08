@@ -1,0 +1,82 @@
+#!/usr/bin/env python
+"""epd is the command-line tool for managing your Enthought Python
+Distribution.
+
+Usage:
+    epd (install | upgrade | remove) <package>...
+    epd install <package> [version]
+    epd upgrade
+    epd search <string>
+    epd info <package>
+    epd list (all | installed | outdated)
+    epd set-credentials
+    epd show-config
+    epd -h | --help
+    epd --version
+
+Options:
+    -h --help       Show this screen,
+    --version       Show version of epd.py.
+"""
+import sys
+from docopt import docopt
+from getpass import getpass
+from sh import enpkg
+
+
+aggregated = ""
+
+
+def userpass_interact(char, stdin):
+    global aggregated
+    sys.stdout.write(char.encode())
+    aggregated += char
+    if aggregated.endswith("Email (or username): "):
+        user_in = raw_input()
+        stdin.put(user_in + "\n")
+    elif aggregated.endswith("Password: "):
+        user_in = getpass('')
+        stdin.put(user_in + "\n")
+
+
+def dispatch(arguments):
+    if arguments['show-config']:
+        print enpkg('--config')
+    elif arguments['set-credentials']:
+        p = enpkg('--userpass', _out=userpass_interact, _out_bufsize=0, _tty_in=True)
+        p.wait()
+    elif arguments['info']:
+        print enpkg('--info', arguments['<package>'])
+    elif arguments['search']:
+        print enpkg('--search', arguments['<string>'])
+    elif arguments['list']:
+        if arguments['all']:
+            print enpkg('--search')
+        elif arguments['installed']:
+            print enpkg('--list')
+        elif arguments['outdated']:
+            print enpkg('--whats-new')
+    elif arguments['install']:
+        if arguments['version']:
+            print enpkg(arguments['<package>'], arguments['version'])
+        else:
+            print enpkg(arguments['<package>'])
+    elif arguments['remove']:
+        print enpkg('--remove', arguments['<package>'])
+    elif arguments['upgrade']:
+        if len(arguments['<package>']) == 0:
+            whats_new = enpkg('--whats-new')
+            lines = whats_new.strip().split('\n')
+            lines = lines[2:]  # discard header
+            if lines[0].strip() == "no new version of any installed package is available":
+                print lines[0].strip()
+            else:
+                packages = [line.split()[0] for line in lines]
+                print enpkg(packages)
+        else:
+            print enpkg(arguments['<package>'])
+
+
+if __name__ == '__main__':
+    arguments = docopt(__doc__, version="epd.py 0.1alpha")
+    dispatch(arguments)
