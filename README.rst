@@ -6,6 +6,6 @@ Play with the UI and let me know what you think!
 
 Requirements
 ------------
- - enpkg
- - docopt
- - sh
+- enpkg
+- docopt
+- sh
