@@ -11,6 +11,8 @@ Usage:
     epd list (all | installed | outdated)
     epd set-credentials
     epd show-config
+    epd log
+    epd imports
     epd -h | --help
     epd --version
 
@@ -42,6 +44,10 @@ def userpass_interact(char, stdin):
 def dispatch(arguments):
     if arguments['show-config']:
         print enpkg('--config')
+    elif arguments['log']:
+        print enpkg('--log')
+    elif arguments['imports']:
+        print enpkg('--imports')
     elif arguments['set-credentials']:
         p = enpkg('--userpass', _out=userpass_interact, _out_bufsize=0, _tty_in=True)
         p.wait()
