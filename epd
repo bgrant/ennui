@@ -30,6 +30,7 @@ aggregated = ""
 
 
 def userpass_interact(char, stdin):
+    """Do fancy things to interact with `enpkg --userpass`."""
     global aggregated
     sys.stdout.write(char.encode())
     aggregated += char
@@ -42,6 +43,9 @@ def userpass_interact(char, stdin):
 
 
 def dispatch(arguments):
+    """Take the command-line arguments and translate them into enpkg
+    arguments.
+    """
     if arguments['show-config']:
         print enpkg('--config')
     elif arguments['log']:
@@ -85,5 +89,5 @@ def dispatch(arguments):
 
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version="epd.py 0.1alpha")
+    arguments = docopt(__doc__, version="epd 0.1alpha")
     dispatch(arguments)
