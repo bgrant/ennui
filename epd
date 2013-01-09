@@ -73,10 +73,11 @@ def dispatch(arguments):
         if len(arguments['<package>']) == 0:
             whats_new = enpkg('--whats-new')
             lines = whats_new.strip().split('\n')
-            lines = lines[2:]  # discard header
-            if lines[0].strip() == "no new version of any installed package is available":
-                print lines[0].strip()
+            if lines[2].strip() == "no new version of any installed package is available":
+                for line in lines:
+                    print line
             else:
+                lines = lines[2:]  # discard header
                 packages = [line.split()[0] for line in lines]
                 print enpkg(packages)
         else:
