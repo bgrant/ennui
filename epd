@@ -14,7 +14,7 @@ Usage:
     epd log
     epd imports
     epd version
-    epd help | -h | --help
+    epd help
 
 Options:
     -h --help       Show this screen,
