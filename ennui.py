@@ -1,20 +1,19 @@
 #!/usr/bin/env python
-"""epd is the command-line tool for managing your Enthought Python
-Distribution.
+"""ennui is an alternative command-line user-interface to enstaller (enpkg).
 
 Usage:
-    epd (install | upgrade | remove) <package>...
-    epd install <package> [version]
-    epd upgrade
-    epd search <string>
-    epd info <package>
-    epd list (all | installed | outdated)
-    epd set-credentials
-    epd show-config
-    epd log
-    epd imports
-    epd version
-    epd help
+    ennui (install | upgrade | remove) <package>...
+    ennui install <package> [version]
+    ennui upgrade
+    ennui search <string>
+    ennui info <package>
+    ennui list (all | installed | outdated)
+    ennui set-credentials
+    ennui show-config
+    ennui log
+    ennui imports
+    ennui version
+    ennui help
 
 Options:
     -h --help       Show this screen,
@@ -95,6 +94,10 @@ def dispatch(arguments):
             print enpkg(arguments['<package>'])
 
 
-if __name__ == '__main__':
+def main():
     arguments = docopt(__doc__, version=__version__)
     dispatch(arguments)
+
+
+if __name__ == '__main__':
+    main()

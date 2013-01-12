@@ -1,8 +1,8 @@
-This is a working mockup of how I wish the UI of the EPD command-line
-tool (currently enpkg) worked.  It uses the `docopt` and `sh` libraries
-and calls enpkg in the background.
-
-Play with the UI and let me know what you think!
+Ennui
+=====
+ennui is an alternative command-line user interface to enstaller
+(enpkg).  It currently uses the `docopt` and `sh` libraries and calls
+out to enpkg.
 
 Requirements
 ------------
